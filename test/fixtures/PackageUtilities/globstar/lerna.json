@@ -1,8 +1,0 @@
-{
-  "lerna": "__TEST_VERSION__",
-  "packages": [
-    ".",
-    "src/**"
-  ],
-  "version": "1.0.0"
-}

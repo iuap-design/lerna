@@ -1,111 +1,95 @@
 {
-  "name": "lerna",
-  "version": "2.0.0-rc.3",
-  "description": "Tool for managing JavaScript projects with multiple packages",
-  "main": "lib/index.js",
-  "files": [
-    "bin",
-    "lib"
-  ],
+  "name": "lerna-monorepo",
+  "version": "3.0.0-monorepo",
+  "description": "lerna dog-fooding lerna",
+  "private": true,
   "scripts": {
-    "build": "babel src -d lib",
-    "dev": "babel -w src -d lib",
-    "lint": "eslint . --ignore-path .gitignore",
+    "ci": "npm test -- --ci --maxWorkers=2 && npm run integration -- --ci",
+    "ci:windows": "jest --ci --maxWorkers=2 && npm run integration -- --ci",
     "fix": "npm run lint -- --fix",
-    "preintegration": "npm pack",
-    "integration": "jest --config test/config/integration.json",
-    "pretest": "npm run lint -- --cache",
-    "test": "jest",
-    "ci": "npm test -- --coverage --verbose && npm run integration",
-    "prepublish": "npm run build"
+    "integration": "jest --config jest.integration.js --maxWorkers=2",
+    "lint": "eslint . -c .eslintrc.yaml --no-eslintrc --ignore-path .gitignore --cache --cache-location ./node_modules/.cache/eslint",
+    "pretest": "npm run lint",
+    "test": "jest"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/lerna/lerna.git"
   },
-  "author": "Sebastian McKenzie <sebmck@gmail.com>",
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/lerna/lerna/issues"
-  },
-  "homepage": "https://lernajs.io/",
-  "dependencies": {
-    "async": "^1.5.0",
-    "chalk": "^1.1.1",
-    "cmd-shim": "^2.0.2",
-    "columnify": "^1.5.4",
-    "command-join": "^2.0.0",
-    "conventional-changelog-cli": "^1.3.1",
-    "conventional-recommended-bump": "^1.0.0",
-    "dedent": "^0.7.0",
-    "execa": "^0.6.3",
-    "find-up": "^2.1.0",
-    "fs-promise": "^2.0.2",
-    "get-port": "^3.1.0",
-    "glob": "^7.0.6",
-    "globby": "^6.1.0",
-    "graceful-fs": "^4.1.11",
-    "inquirer": "^3.0.6",
-    "load-json-file": "^2.0.0",
-    "lodash": "^4.17.4",
-    "minimatch": "^3.0.0",
-    "npmlog": "^4.0.2",
-    "p-finally": "^1.0.0",
-    "path-exists": "^3.0.0",
-    "read-cmd-shim": "^1.0.1",
-    "read-pkg": "^2.0.0",
-    "rimraf": "^2.6.1",
-    "safe-buffer": "^5.0.1",
-    "semver": "^5.1.0",
-    "signal-exit": "^3.0.2",
-    "strong-log-transformer": "^1.0.6",
-    "temp-write": "^3.2.0",
-    "write-file-atomic": "^1.3.3",
-    "write-json-file": "^2.0.0",
-    "write-pkg": "^2.1.0",
-    "yargs": "^7.1.0"
-  },
+  "homepage": "https://lerna.js.org/",
   "bin": {
-    "lerna": "./bin/lerna.js"
+    "lerna": "core/lerna/cli.js"
+  },
+  "dependencies": {
+    "lerna": "file:core/lerna"
   },
   "devDependencies": {
-    "babel-cli": "^6.24.1",
-    "babel-eslint": "^7.2.3",
-    "babel-jest": "^19.0.0",
-    "babel-plugin-add-module-exports": "^0.2.1",
-    "babel-preset-env": "^1.4.0",
-    "eslint": "^3.19.0",
-    "eslint-config-babel": "^6.0.0",
-    "eslint-plugin-babel": "^4.1.1",
-    "eslint-plugin-flowtype": "^2.32.1",
-    "eslint-plugin-node": "^4.2.2",
-    "file-url": "^2.0.2",
-    "jest": "^19.0.2",
+    "@lerna-test/calls-back": "file:helpers/calls-back",
+    "@lerna-test/cli-runner": "file:helpers/cli-runner",
+    "@lerna-test/clone-fixture": "file:helpers/clone-fixture",
+    "@lerna-test/command-runner": "file:helpers/command-runner",
+    "@lerna-test/commit-change-to-package": "file:helpers/commit-change-to-package",
+    "@lerna-test/copy-fixture": "file:helpers/copy-fixture",
+    "@lerna-test/figgy-pudding-matchers": "file:helpers/figgy-pudding-matchers",
+    "@lerna-test/find-fixture": "file:helpers/find-fixture",
+    "@lerna-test/get-commit-message": "file:helpers/get-commit-message",
+    "@lerna-test/git-add": "file:helpers/git-add",
+    "@lerna-test/git-checkout": "file:helpers/git-checkout",
+    "@lerna-test/git-commit": "file:helpers/git-commit",
+    "@lerna-test/git-init": "file:helpers/git-init",
+    "@lerna-test/git-merge": "file:helpers/git-merge",
+    "@lerna-test/git-status": "file:helpers/git-status",
+    "@lerna-test/git-tag": "file:helpers/git-tag",
+    "@lerna-test/init-fixture": "file:helpers/init-fixture",
+    "@lerna-test/init-named-fixture": "file:helpers/init-named-fixture",
+    "@lerna-test/load-manifests": "file:helpers/load-manifests",
+    "@lerna-test/logging-output": "file:helpers/logging-output",
+    "@lerna-test/multi-line-trim-right": "file:helpers/multi-line-trim-right",
+    "@lerna-test/normalize-relative-dir": "file:helpers/normalize-relative-dir",
+    "@lerna-test/pkg-matchers": "file:helpers/pkg-matchers",
+    "@lerna-test/serialize-changelog": "file:helpers/serialize-changelog",
+    "@lerna-test/serialize-git-sha": "file:helpers/serialize-git-sha",
+    "@lerna-test/serialize-placeholders": "file:helpers/serialize-placeholders",
+    "@lerna-test/serialize-tempdir": "file:helpers/serialize-tempdir",
+    "@lerna-test/serialize-windows-paths": "file:helpers/serialize-windows-paths",
+    "@lerna-test/set-npm-userconfig": "file:helpers/set-npm-userconfig",
+    "@lerna-test/show-commit": "file:helpers/show-commit",
+    "@lerna-test/silence-logging": "file:helpers/silence-logging",
+    "@lerna-test/update-lerna-config": "file:helpers/update-lerna-config",
+    "@zkochan/cmd-shim": "^3.1.0",
+    "camelcase": "^5.3.1",
+    "debug": "^4.1.1",
+    "eslint": "^6.6.0",
+    "eslint-config-airbnb-base": "^14.0.0",
+    "eslint-config-prettier": "^6.7.0",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-jest": "^23.0.4",
+    "eslint-plugin-node": "^10.0.0",
+    "eslint-plugin-prettier": "^3.1.1",
+    "fast-async": "^7.0.6",
+    "find-up": "^3.0.0",
+    "fs-extra": "^8.1.0",
+    "glob-parent": "^5.1.0",
+    "globby": "^9.2.0",
+    "jest": "^24.9.0",
+    "jest-circus": "^24.9.0",
+    "load-json-file": "^5.3.0",
     "normalize-newline": "^3.0.0",
-    "normalize-path": "^2.1.1",
-    "replacestream": "^4.0.2",
-    "tempy": "^0.1.0"
-  },
-  "jest": {
-    "collectCoverageFrom": [
-      "src/**/*.js"
-    ],
-    "modulePathIgnorePatterns": [
-      "<rootDir>/test/fixtures"
-    ],
-    "roots": [
-      "<rootDir>/src",
-      "<rootDir>/test"
-    ],
-    "setupFiles": [
-      "<rootDir>/test/helpers/env.js"
-    ],
-    "testEnvironment": "node",
-    "testMatch": [
-      "**/test/*.js"
-    ]
+    "normalize-path": "^3.0.0",
+    "p-map": "^2.1.0",
+    "path-key": "^2.0.1",
+    "pify": "^4.0.1",
+    "prettier": "^1.19.1",
+    "semver": "^6.3.0",
+    "tacks": "^1.3.0",
+    "tar": "^4.4.13",
+    "tempy": "^0.2.1",
+    "touch": "^3.1.0",
+    "write-json-file": "^3.2.0",
+    "yargs": "^14.2.2"
   },
   "engines": {
-    "node": ">= 4"
+    "node": ">= 6.9.0"
   }
 }

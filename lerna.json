@@ -1,19 +1,26 @@
 {
-  "lerna": "2.0.0-beta.32",
   "packages": [
-    "."
+    "commands/*",
+    "core/*",
+    "utils/*"
   ],
-  "changelog": {
-    "repo": "lerna/lerna",
-    "labels": {
-      "Tag: Breaking Change": ":boom: Breaking Change",
-      "Tag: Enhancement": ":rocket: Enhancement",
-      "Tag: Bug Fix": ":bug: Bug Fix",
-      "Tag: Polish": ":nail_care: Polish",
-      "Tag: Documentation": ":memo: Documentation",
-      "Tag: Internal": ":house: Internal"
+  "command": {
+    "create": {
+      "homepage": "https://github.com/lerna/lerna",
+      "license": "MIT"
     },
-    "cacheDir": ".changelog"
+    "version": {
+      "allowBranch": "master",
+      "conventionalCommits": true,
+      "exact": true,
+      "gitRemote": "upstream",
+      "message": "chore(release): %s"
+    }
   },
-  "version": "0.0.0"
+  "ignoreChanges": [
+    "**/__fixtures__/**",
+    "**/__tests__/**",
+    "**/*.md"
+  ],
+  "version": "3.20.2"
 }
